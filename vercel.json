@@ -1,25 +1,28 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "api/main.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "frontend/package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "dist"
-            }
-        }
-    ],
     "rewrites": [
         {
-            "source": "/api/(.*)",
+            "source": "/api/webhook/shopify",
             "destination": "/api/main.py"
         },
         {
             "source": "/webhook/shopify",
+            "destination": "/api/main.py"
+        },
+        {
+            "source": "/api/stats",
+            "destination": "/api/main.py"
+        },
+        {
+            "source": "/api/orders(.*)",
+            "destination": "/api/main.py"
+        },
+        {
+            "source": "/api/health",
+            "destination": "/api/main.py"
+        },
+        {
+            "source": "/api/(.*)",
             "destination": "/api/main.py"
         },
         {
