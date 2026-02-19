@@ -85,14 +85,20 @@ def verify_webhook_token(x_webhook_token: Optional[str] = Header(None)):
 # ENDPOINTS
 # ────────────────────────────────────────────────────
 
+@app.get("/")
+async def root_diagnostic(request: Request):
+    return {
+        "status": "online",
+        "message": "COPAS API is running",
+        "path_received": request.url.path,
+        "hint": "Si ves esto, las rutas deben configurarse sin el prefijo /api en el decorador"
+    }
+
 @app.get("/health")
 def health_check():
-    """Health check — Útil para Railway/Render para saber que el servidor vive."""
     return {"status": "ok", "service": "COPAS CRM API"}
 
-
 @app.post("/webhook/shopify", dependencies=[Depends(verify_webhook_token)])
-@app.post("/api/webhook/shopify", dependencies=[Depends(verify_webhook_token)])
 async def receive_shopify_order(payload: ShopifyOrderPayload):
     """
     Recibe un pedido de Shopify vía Make.
@@ -205,7 +211,6 @@ async def receive_shopify_order(payload: ShopifyOrderPayload):
 
 
 @app.get("/orders")
-@app.get("/api/orders")
 def list_orders(
     status: Optional[str] = Query(None),
     whatsapp_sent: Optional[bool] = Query(None),
@@ -218,7 +223,6 @@ def list_orders(
 
 
 @app.get("/orders/{order_id}")
-@app.get("/api/orders/{order_id}")
 def get_order(order_id: str):
     """Detalle completo de un pedido con historial de WhatsApp."""
     order = get_order_by_id(order_id)
@@ -275,7 +279,6 @@ def resend_whatsapp(order_id: str):
 
 
 @app.get("/stats")
-@app.get("/api/stats")
 def dashboard_stats():
     """Estadísticas del dashboard CRM."""
     return get_dashboard_stats()

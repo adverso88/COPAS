@@ -2,40 +2,24 @@
     "version": 2,
     "rewrites": [
         {
-            "source": "/api/webhook/shopify",
-            "destination": "/api/main.py"
+            "source": "/api/(.*)",
+            "destination": "/api/index.py"
         },
         {
             "source": "/webhook/shopify",
-            "destination": "/api/main.py"
-        },
-        {
-            "source": "/api/stats",
-            "destination": "/api/main.py"
-        },
-        {
-            "source": "/api/orders(.*)",
-            "destination": "/api/main.py"
-        },
-        {
-            "source": "/api/health",
-            "destination": "/api/main.py"
-        },
-        {
-            "source": "/api/(.*)",
-            "destination": "/api/main.py"
+            "destination": "/api/index.py"
         },
         {
             "source": "/stats",
-            "destination": "/api/main.py"
+            "destination": "/api/index.py"
         },
         {
             "source": "/orders(.*)",
-            "destination": "/api/main.py"
+            "destination": "/api/index.py"
         },
         {
             "source": "/health",
-            "destination": "/api/main.py"
+            "destination": "/api/index.py"
         },
         {
             "source": "/(.*)",
