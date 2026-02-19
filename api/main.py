@@ -11,35 +11,26 @@ Endpoints:
   GET  /health               — Health check
 """
 import os
-from fastapi import FastAPI, HTTPException, Header, Depends, Query
+import sys
+import logging
+from fastapi import FastAPI, HTTPException, Header, Depends, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from typing import Optional, List
-import logging
+
+# Forzar el directorio api/ en el path
+sys.path.append(os.path.dirname(__file__))
 
 try:
     from .models import ShopifyOrderPayload, OrderStatusUpdate
-    from .database import (
-        upsert_customer,
-        upsert_order,
-        get_orders,
-        get_order_by_id,
-        update_order_status,
-        mark_whatsapp_sent,
-        get_dashboard_stats,
-    )
+    from .database import upsert_customer, upsert_order, get_orders, get_order_by_id, update_order_status, mark_whatsapp_sent, get_dashboard_stats
     from .whatsapp_service import send_order_confirmation
-except ImportError:
+except (ImportError, ValueError):
+    import models
     from models import ShopifyOrderPayload, OrderStatusUpdate
-    from database import (
-        upsert_customer,
-        upsert_order,
-        get_orders,
-        get_order_by_id,
-        update_order_status,
-        mark_whatsapp_sent,
-        get_dashboard_stats,
-    )
+    import database
+    from database import upsert_customer, upsert_order, get_orders, get_order_by_id, update_order_status, mark_whatsapp_sent, get_dashboard_stats
+    import whatsapp_service
     from whatsapp_service import send_order_confirmation
 
 load_dotenv()
@@ -58,6 +49,14 @@ app = FastAPI(
     description="CRM de pedidos Shopify con integración WhatsApp",
     version="1.0.0",
 )
+
+# Middleware para depurar rutas en Vercel
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"🚀 Request: {request.method} {request.url.path}")
+    response = await call_next(request)
+    logger.info(f"🏁 Response status: {response.status_code}")
+    return response
 
 app.add_middleware(
     CORSMiddleware,
