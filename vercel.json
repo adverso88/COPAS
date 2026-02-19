@@ -2,27 +2,7 @@
     "version": 2,
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/webhook/shopify",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/stats",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/orders(.*)",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/health",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/(.*)",
+            "source": "/((?!api/).*)",
             "destination": "/frontend/$1"
         }
     ]
