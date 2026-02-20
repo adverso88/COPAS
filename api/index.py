@@ -286,4 +286,12 @@ def dashboard_stats():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run("index:app", host="0.0.0.0", port=port, reload=True)
+
+@app.exception_handler(404)
+async def custom_404_handler(request: Request, exc: HTTPException):
+    return {
+        "detail": "Not Found",
+        "path": request.url.path,
+        "message": "Backend caught this request. Static files not found?"
+    }
+

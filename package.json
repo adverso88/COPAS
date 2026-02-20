@@ -2,7 +2,7 @@
     "name": "copas-root",
     "private": true,
     "scripts": {
-        "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/. public/"
+        "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/. public/ && echo 'Build Success' > public/build_success.txt"
     },
     "engines": {
         "node": "20.x"
