@@ -1,0 +1,10 @@
+{
+    "name": "copas-root",
+    "private": true,
+    "scripts": {
+        "build": "cd frontend && npm install && npm run build && cd .. && mkdir dist && xcopy /E /I frontend\\dist dist"
+    },
+    "engines": {
+        "node": "18.x"
+    }
+}

@@ -29,7 +29,7 @@ Frontend React/Vite
 ## Módulos del Sistema
 
 ### Módulo 1: Backend API (FastAPI)
-**Archivo:** `scripts/backend/main.py`
+**Archivo:** `api/index.py` (Adaptado para Vercel Serverless)
 - Endpoint POST `/webhook/shopify` — recibe pedidos de Make
 - Endpoint GET `/orders` — lista pedidos (para el frontend)
 - Endpoint PATCH `/orders/{id}` — actualizar estado del pedido
@@ -242,12 +242,12 @@ python-multipart>=0.0.9
 COPAS/
 ├── directivas/
 │   └── shopify_crm_whatsapp_SOP.md   ← ESTE ARCHIVO
-├── scripts/
-│   └── backend/
-│       ├── main.py                    ← FastAPI app
-│       ├── models.py                  ← Pydantic schemas
-│       ├── database.py                ← Supabase client
-│       └── whatsapp_service.py        ← WhatsApp integration
+├── api/                               ← Backend FastAPI (Serverless Vercel)
+│   ├── index.py                       ← Entrypoint Vercel
+│   ├── models.py
+│   ├── database.py
+│   └── whatsapp_service.py
+├── scripts/backend/                   ← (OBSOLETO / RESPALDO)
 ├── frontend/                          ← React/Vite CRM dashboard
 │   ├── src/
 │   │   ├── App.jsx
@@ -256,6 +256,7 @@ COPAS/
 │   │   │   └── OrderDetail.jsx
 │   │   └── components/
 ├── .env                               ← Variables de entorno
+├── vercel.json                        ← Configuración de ruteo Vercel
 ├── requirements.txt
 └── README.md
 ```

@@ -48,6 +48,9 @@ app = FastAPI(
     title="COPAS CRM API",
     description="CRM de pedidos Shopify con integración WhatsApp",
     version="1.0.0",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+    servers=[{"url": "/api", "description": "Vercel API"}]
 )
 
 # Middleware para depurar rutas en Vercel
@@ -290,4 +293,4 @@ def dashboard_stats():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run("index:app", host="0.0.0.0", port=port, reload=True)
