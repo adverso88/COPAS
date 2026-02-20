@@ -88,14 +88,7 @@ def verify_webhook_token(x_webhook_token: Optional[str] = Header(None)):
 # ENDPOINTS
 # ────────────────────────────────────────────────────
 
-@app.get("/")
-async def root_diagnostic(request: Request):
-    return {
-        "status": "online",
-        "message": "COPAS API is running",
-        "path_received": request.url.path,
-        "hint": "Si ves esto, las rutas deben configurarse sin el prefijo /api en el decorador"
-    }
+
 
 @app.get("/health")
 def health_check():
