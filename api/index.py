@@ -21,11 +21,13 @@ from typing import Optional, List
 # Forzar el directorio api/ en el path
 sys.path.append(os.path.dirname(__file__))
 
+# Imports directos para Vercel
 try:
     from .models import ShopifyOrderPayload, OrderStatusUpdate
     from .database import upsert_customer, upsert_order, get_orders, get_order_by_id, update_order_status, mark_whatsapp_sent, get_dashboard_stats
     from .whatsapp_service import send_order_confirmation
-except (ImportError, ValueError):
+except ImportError:
+    # Fallback para ejecución local directa (python api/index.py)
     import models
     from models import ShopifyOrderPayload, OrderStatusUpdate
     import database
