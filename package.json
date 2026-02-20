@@ -2,7 +2,7 @@
     "name": "copas-root",
     "private": true,
     "scripts": {
-        "build": "cd frontend && rm -f package-lock.json && npm install --no-audit && npm run build && cd .. && rm -rf public && mkdir -p public && cp -r frontend/dist/. public/"
+        "build": "cd frontend && npm install && npm run build"
     },
     "engines": {
         "node": "18.x"
